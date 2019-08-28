@@ -1,3 +1,4 @@
+# coding:utf-8
 from HtmDownload import HtmDownload
 from HtmOutput import HtmOutput
 from HtmParser import HtmParser
@@ -22,15 +23,19 @@ class SpiderMain:
                 self.url_manager.add_new_urls(new_urls)
                 self.htm_output.append(htm_data)
                 print("%d html parsed , url = %s" % (counter, new_url))
+                print("new_urls size = %d" % len(new_urls))
                 counter += 1
             except:
-                print ("html pars error !!")
+                print ("html parse error !!")
             if counter > 5:
                 self.htm_output.save()
                 break
 
 
 if __name__ == '__main__':
-    root_url = "https://baike.baidu.com/item/%E4%BF%9D%E5%AE%9A/84913?fr=aladdin"
+    # 保定词条
+    # root_url = "https://baike.baidu.com/item/%E4%BF%9D%E5%AE%9A/84913?fr=aladdin"
+    # 二战词条
+    root_url = "https://baike.baidu.com/item/%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%B8%96%E7%95%8C%E5%A4%A7%E6%88%98/174090?fr=aladdin#2"
     spider = SpiderMain()
     spider.run(root_url)

@@ -1,4 +1,3 @@
-import os
 
 
 class HtmOutput:
@@ -6,7 +5,7 @@ class HtmOutput:
         self.datas = []
 
     def save(self):
-        output = open("output\output.html", 'w')
+        output = open("..\output\output.html", 'w')
         output.write("<html>")
         output.write("<body>")
         output.write("<table>")
