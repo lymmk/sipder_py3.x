@@ -11,16 +11,15 @@ class UrlParser:
         soup = BeautifulSoup(html, features='html.parser', from_encoding="utf-8")
         return self._get_img_paths(soup)
 
-
     def _get_img_paths(self, soup):
         img_paths = set()
         # href="/item/%E7%9B%B4%E9%9A%B6%E6%80%BB%E7%9D%A3/3494828"
         paths = soup.find_all('img')
         for url in paths:
             link = url['src']
-            img_paths.add(link)
+            if str(link).endswith("jpg"):
+                img_paths.add(link)
         return img_paths
-
 
     def download_html(self, url):
         request = urllib2.Request(url)
