@@ -1,11 +1,11 @@
 # coding:utf-8
+import time
+
+from wusan_spider.CustomSelenium import BrowserDriver
 from wusan_spider.HtmDownload import HtmDownload
 from wusan_spider.HtmOutput import HtmOutput
 from wusan_spider.HtmParser import HtmParser
-from wusan_spider.CustomSelenium import BrowserDriver
 from wusan_spider.Item import *
-import time
-import json
 
 
 class SpiderMain:
@@ -24,6 +24,7 @@ class SpiderMain:
         # 获取第二层数据
         self.get_layer2()
         print(self.tree_item)
+        self.htm_output.save_to_xmind(self.tree_item)
         self._stop()
 
     def get_layer2(self):
@@ -40,7 +41,7 @@ class SpiderMain:
             self.tree_item.layer3.set_p_key(label.text)
 
     def get_layer3(self):
-        for label in self.tree_item.layer2.get_labels():
+        for label in self.tree_item.layer2.get_labels():# error
             # 刷新页面元素
             label.click()
             labels = self.driver.browser.find_elements_by_tag_name('label')

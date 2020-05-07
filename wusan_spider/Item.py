@@ -25,8 +25,11 @@ class Layer:
             data.append(label.text)
         self._add(key=key, data=data)
 
-    def get_labels(self):
-        return self._labels
+    def get_labels(self, key=None):
+        if key is None:
+            return self._labels
+        else:
+            return self.data.get(key)
 
     def __str__(self):
         return self.data.__str__()
@@ -61,6 +64,9 @@ class Layer3(Layer):
 
     def set_p_key(self, p_key):
         self.data2[p_key] = self.data3
+
+    def get_by_p_key(self, p_key):
+        return self.data2.get(p_key)
 
     def __str__(self):
         return self.data2.__str__()
