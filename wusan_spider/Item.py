@@ -13,19 +13,17 @@ class Layer:
         self.data = dict()
         self._labels = None
 
-    def _add(self, p_layer='TOP', data=None):
-        self.data['parent_layer'] = p_layer
-        self.data['data'] = data
-        pass
+    def _add(self, key='ROOT', data=None):
+        self.data[key] = data
 
-    def set_labels(self, p_layer='TOP', labels=None):
+    def set_labels(self, key='ROOT', labels=None):
         self._labels = labels
         if labels is None:
             return
         data = []
         for label in labels:
             data.append(label.text)
-        self._add(p_layer=p_layer, data=data)
+        self._add(key=key, data=data)
 
     def get_labels(self):
         return self._labels
@@ -43,7 +41,29 @@ class Layer2(Layer):
 
 
 class Layer3(Layer):
-    pass
+
+    def __init__(self):
+        super(Layer3, self).__init__()
+        # 第三层数据
+        self.data3 = list()
+        # 包含第二层目录
+        self.data2 = dict()
+
+    def set_labels(self, key='ROOT', labels=None):
+        self._labels = labels
+        if labels is None:
+            return
+        data = []
+        for label in labels:
+            data.append(label.text)
+        self._add(key=key, data=data)
+        self.data3.append(self.data)
+
+    def set_p_key(self, p_key):
+        self.data2[p_key] = self.data3
+
+    def __str__(self):
+        return self.data2.__str__()
 
 
 class Layer4(Layer):

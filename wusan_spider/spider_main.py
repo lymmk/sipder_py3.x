@@ -2,10 +2,10 @@
 from wusan_spider.HtmDownload import HtmDownload
 from wusan_spider.HtmOutput import HtmOutput
 from wusan_spider.HtmParser import HtmParser
-from wusan_spider.UrlManager import UrlManager
 from wusan_spider.CustomSelenium import BrowserDriver
 from wusan_spider.Item import *
 import time
+import json
 
 
 class SpiderMain:
@@ -21,14 +21,33 @@ class SpiderMain:
         labels = self.driver.browser.find_elements_by_tag_name('label')
         self.htm_parser.set_labels(labels)
         self.tree_item.layer1.set_labels(labels=self.htm_parser.parse_layer1())
-        for label in self.tree_item.layer1.get_labels():
-            print(label.text)
-            label.click()
-            # 等待加载1秒
-            time.sleep(1)
-            self.tree_item.layer2.set_labels(p_layer=label.text, labels=self.htm_parser.parse_layer2())
+        # 获取第二层数据
+        self.get_layer2()
         print(self.tree_item)
         self._stop()
+
+    def get_layer2(self):
+        for label in self.tree_item.layer1.get_labels():
+            # 刷新页面元素
+            label.click()
+            labels = self.driver.browser.find_elements_by_tag_name('label')
+            self.htm_parser.set_labels(labels)
+            # 等待加载1秒
+            time.sleep(1)
+            self.tree_item.layer2.set_labels(key=label.text, labels=self.htm_parser.parse_layer2())
+            # 获取第三层数据
+            self.get_layer3()
+            self.tree_item.layer3.set_p_key(label.text)
+
+    def get_layer3(self):
+        for label in self.tree_item.layer2.get_labels():
+            # 刷新页面元素
+            label.click()
+            labels = self.driver.browser.find_elements_by_tag_name('label')
+            self.htm_parser.set_labels(labels)
+            # 等待加载1秒
+            time.sleep(1)
+            self.tree_item.layer3.set_labels(key=label.text, labels=self.htm_parser.parse_layer3())
 
     def _stop(self):
         self.driver.close()
