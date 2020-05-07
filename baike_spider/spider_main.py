@@ -1,8 +1,8 @@
 # coding:utf-8
-from HtmDownload import HtmDownload
-from HtmOutput import HtmOutput
-from HtmParser import HtmParser
-from UrlManager import UrlManager
+from baike_spider.HtmDownload import HtmDownload
+from baike_spider.HtmOutput import HtmOutput
+from baike_spider.HtmParser import HtmParser
+from baike_spider.UrlManager import UrlManager
 
 
 class SpiderMain:
@@ -25,8 +25,8 @@ class SpiderMain:
                 print("%d html parsed , url = %s" % (counter, new_url))
                 print("new_urls size = %d" % len(new_urls))
                 counter += 1
-            except:
-                print ("html parse error !!")
+            except Exception as e:
+                print("html parse error !!", e)
             if counter > 5:
                 self.htm_output.save()
                 break

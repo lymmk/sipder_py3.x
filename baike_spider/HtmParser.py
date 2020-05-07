@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import re
-import urlparse
+import urllib.parse as urlparse
 
 
 class HtmParser:
@@ -33,4 +33,5 @@ class HtmParser:
 
         data_summary = soup.find('div', class_="lemma-summary")
         res_data['summary'] = data_summary.get_text()
+        print('title:'+res_data['title'])
         return res_data

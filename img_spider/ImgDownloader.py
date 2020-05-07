@@ -1,5 +1,6 @@
 # coding:utf-8
-import urllib2
+import urllib.request as urllib2
+
 
 class ImgDownloader:
     def download(self, url):

@@ -5,17 +5,16 @@ class HtmOutput:
         self.datas = []
 
     def save(self):
-        output = open("..\output\output.html", 'w', encoding='utf-8')
+        output = open("..\output\\53_output.html", 'w', encoding='utf-8')
         output.write("<html>")
         output.write("<body>")
         output.write("<table>")
 
         for data in self.datas:
-            print('title : '+data['title'])
             output.write("<tr>")
             output.write("<td>%s</td>" % data['url'])
-            output.write("<td>%s</td>" % data['title'])
-            output.write("<td>%s</td>" % data['summary'])
+            output.write("<td>%s</td>" % data['title'].encode('utf-8'))
+            output.write("<td>%s</td>" % data['summary'].encode('utf-8'))
             output.write("</tr>")
 
         output.write("</table>")

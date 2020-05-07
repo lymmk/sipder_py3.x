@@ -1,6 +1,6 @@
 # coding:utf-8
 import re
-import urllib2
+import urllib.request as urllib2
 from bs4 import BeautifulSoup
 
 
