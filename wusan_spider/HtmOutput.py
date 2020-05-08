@@ -29,21 +29,21 @@ class HtmOutput:
                 s_topic2 = s_topic.addSubTopic()
                 s_topic2.setTitle(topic2)
                 self.topic2.append(s_topic2)
-                for topic3 in self.tree.layer3.get_data()[topic1]:
-                    for _topic3 in topic3:
-                        if topic2 in _topic3:
-                            for title in topic3[_topic3]:
+                for layer2 in self.tree.layer3.get_data()[topic1]:
+                    for item_layer2 in layer2:
+                        if topic2 in item_layer2:
+                            for topic3 in layer2[item_layer2]:
                                 s_topic3 = s_topic2.addSubTopic()
-                                s_topic3.setTitle(title)
+                                s_topic3.setTitle(topic3)
                                 self.topic3.append(s_topic3)
                                 # 最后一层
-                                for l2 in self.tree.layer4.get_data()[topic1]:
-                                    for l3 in l2:
-                                        if title in l3:
-                                            for span in l2[l3]:
-                                                s_topic4 = s_topic3.addSubTopic()
-                                                s_topic4.setTitle(span)
-                                                self.topic4.append(s_topic4)
-                                                pass
-
+                                for l4_layer2 in self.tree.layer4.get_data()[topic1]:
+                                    for l4_item_layer2 in l4_layer2:
+                                        if topic2 in l4_item_layer2:
+                                            for l4_topic3 in l4_layer2[l4_item_layer2]:
+                                                if topic3 in l4_topic3:
+                                                    for _key in l4_topic3[topic3]:
+                                                        s_topic4 = s_topic3.addSubTopic()
+                                                        s_topic4.setTitle(_key)
+                                                        self.topic4.append(s_topic4)
         xmind.save(x_file, path='53.xmind')

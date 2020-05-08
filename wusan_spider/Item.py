@@ -180,18 +180,25 @@ class Layer4(_Layer):
             _layer2_label = self.data_layer4[key1]
             _layer2_data = self.data[key1]
             for layer2_d in _layer2_data:
+                # 判断 key2 是否存在
                 if key2 in layer2_d:
                     _layer3_data = layer2_d[key2]
                     _layer3_data.append(_data2)
+                else:
+                    _layer3_data.append(_data2)
+                    layer2_d[key2] = _layer3_data
                 pass
             for layer2 in _layer2_label:
-                # 取出对应单个第二层数据
+                # key2存在，取出对应单个第二层数据
                 if key2 in layer2:
                     # 获取第三层数据
                     _layer3_label = layer2[key2]
                     # 根据 key3 写入第四层数据
                     _layer3_label.append(_label_dict)
-            pass
+                else:
+                    _layer3_label.append(_label_dict)
+                    layer2[key2] = _layer3_label
+                pass
         else:
             # 不存在，首次添加
             _layer3_label.append(_label_dict)

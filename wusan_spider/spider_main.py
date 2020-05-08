@@ -29,7 +29,7 @@ class SpiderMain:
 
     def get_layer2(self):
         for label in self.tree_item.layer1.get_labels():
-            # 刷新页面元素
+            # 点击并刷新页面元素
             label.click()
             labels = self.driver.browser.find_elements_by_tag_name('label')
             self.htm_parser.set_labels(labels)
@@ -55,10 +55,10 @@ class SpiderMain:
 
     def get_layer4(self, key1, key2):
         for label in self.tree_item.layer3.get_labels(key1=key1, key2=key2):
-            # 刷新页面元素
             label.click()
             # 等待加载1秒
             time.sleep(1)
+            # 刷新页面元素
             spans = self.driver.browser.find_elements_by_tag_name('span')
             self.htm_parser.set_labels(spans)
             self.tree_item.layer4.set_labels(key1=key1, key2=key2, key3=label.text, labels=self.htm_parser.parse_layer4())
