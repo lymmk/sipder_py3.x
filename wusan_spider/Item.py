@@ -166,7 +166,8 @@ class Layer4(_Layer):
         # 提取label文本元素
         _data = list()
         for label in labels:
-            _data.append(label.text)
+            _data.append(label.text.replace(u'\u3000', ' '))
+        _data2 = {str(key3): _data}
         _layer2_data = list()
         _layer3_data = list()
         # 三四层关联
@@ -181,7 +182,7 @@ class Layer4(_Layer):
             for layer2_d in _layer2_data:
                 if key2 in layer2_d:
                     _layer3_data = layer2_d[key2]
-                    _layer3_data.append(_data)
+                    _layer3_data.append(_data2)
                 pass
             for layer2 in _layer2_label:
                 # 取出对应单个第二层数据
@@ -196,10 +197,10 @@ class Layer4(_Layer):
             _layer3_label.append(_label_dict)
             _layer2_label.append({str(key2): _layer3_label})
             self.data_layer4[key1] = _layer2_label
-            _layer3_data.append(_data)
+            _layer3_data.append(_data2)
             _layer2_data.append({str(key2): _layer3_data})
             self.data[key1] = _layer2_data
-        print('set_labels --> ' + _data.__str__())
+        print('set_labels --> ' + _data2.__str__())
         pass
 
     def get_labels(self, key1=None, key2=None, key3=None):
