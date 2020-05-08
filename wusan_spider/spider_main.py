@@ -35,20 +35,34 @@ class SpiderMain:
             self.htm_parser.set_labels(labels)
             # 等待加载1秒
             time.sleep(1)
-            self.tree_item.layer2.set_labels(key=label.text, labels=self.htm_parser.parse_layer2())
+            self.tree_item.layer2.set_labels(key1=label.text, labels=self.htm_parser.parse_layer2())
             # 获取第三层数据
-            self.get_layer3()
-            self.tree_item.layer3.set_p_key(label.text)
+            self.get_layer3(label.text)
+        pass
 
-    def get_layer3(self):
-        for label in self.tree_item.layer2.get_labels():# error
+    def get_layer3(self, key1):
+        for label in self.tree_item.layer2.get_labels(key1=key1):
             # 刷新页面元素
             label.click()
             labels = self.driver.browser.find_elements_by_tag_name('label')
             self.htm_parser.set_labels(labels)
             # 等待加载1秒
             time.sleep(1)
-            self.tree_item.layer3.set_labels(key=label.text, labels=self.htm_parser.parse_layer3())
+            self.tree_item.layer3.set_labels(key1=key1, key2=label.text, labels=self.htm_parser.parse_layer3())
+            # 获取第四层数据
+            self.get_layer4(key1, label.text)
+        pass
+
+    def get_layer4(self, key1, key2):
+        for label in self.tree_item.layer3.get_labels(key1=key1, key2=key2):
+            # 刷新页面元素
+            label.click()
+            # 等待加载1秒
+            time.sleep(1)
+            spans = self.driver.browser.find_elements_by_tag_name('span')
+            self.htm_parser.set_labels(spans)
+            self.tree_item.layer4.set_labels(key1=key1, key2=key2, key3=label.text, labels=self.htm_parser.parse_layer4())
+        pass
 
     def _stop(self):
         self.driver.close()

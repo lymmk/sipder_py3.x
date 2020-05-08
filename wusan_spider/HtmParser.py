@@ -32,3 +32,12 @@ class HtmParser:
             if data_layer == '3':
                 layer3.append(label)
         return layer3
+
+    def parse_layer4(self):
+        # 获取第四层
+        layer4 = []
+        for span in self.labels:
+            data_layer = span.get_attribute('class')
+            if data_layer == 'title':
+                layer4.append(span)
+        return layer4

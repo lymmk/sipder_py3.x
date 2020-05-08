@@ -9,13 +9,17 @@
 from selenium import webdriver
 import time
 
+from selenium.webdriver.chrome.options import Options
+
 
 class BrowserDriver:
     def __init__(self, engine='Chrome'):
         if engine == 'Firefox':
             self.browser = webdriver.Firefox()
         elif engine == 'Chrome':
-            self.browser = webdriver.Chrome()
+            options = Options()
+            options.add_argument("--headless")
+            self.browser = webdriver.Chrome(chrome_options=options)
 
     def open(self, url):
         self.browser.get(url)
@@ -33,14 +37,15 @@ if __name__ == "__main__":
         print(d.text)
     # layer2 class = gl-flex-grow js-filter-choose
     # gm-filter-choose g-margin-y-sm gl-flex
-    labels = driver.browser.find_elements_by_tag_name('label')
+    labels = driver.browser.find_elements_by_tag_name('a')
     try:
         for l in labels:
-            if l.get_attribute('data-layer') == '2':
-                l.click()
-                time.sleep(1)
+            if l.get_attribute('class') == 'down gl-flex gl-flex-cross-center js-down':
+                driver.browser.execute_script("arguments[0].click();", l)
+                # l.click()
+                # time.sleep(1)
+                # driver.browser.back()
                 print(l.text)
     except Exception as e:
         print(e)
-    driver.close()
-
+    # driver.close()
