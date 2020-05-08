@@ -24,7 +24,7 @@ class SpiderMain:
         # 获取第二层数据
         self.get_layer2()
         print(self.tree_item)
-        self.htm_output.save_to_xmind(self.tree_item)
+        # self.htm_output.save_to_xmind(self.tree_item)
         self._stop()
 
     def get_layer2(self):
@@ -50,7 +50,22 @@ class SpiderMain:
             time.sleep(1)
             self.tree_item.layer3.set_labels(key1=key1, key2=label.text, labels=self.htm_parser.parse_layer3())
             # 获取第四层数据
-            self.get_layer4(key1, label.text)
+            # self.get_layer4(key1, label.text)
+            # 下载附件
+            self.download(key1, label.text)
+        pass
+
+    def download(self, key1, key2):
+        for label in self.tree_item.layer3.get_labels(key1=key1, key2=key2):
+            label.click()
+            # 等待加载1秒
+            time.sleep(1)
+            # 刷新页面元素，查找下载按钮
+            down = self.driver.browser.find_elements_by_tag_name('a')
+            for d in down:
+                if d.get_attribute('class') == 'down gl-flex gl-flex-cross-center js-down':
+                    self.driver.browser.execute_script("arguments[0].click();", d)
+                    print('download '+label.text)
         pass
 
     def get_layer4(self, key1, key2):
